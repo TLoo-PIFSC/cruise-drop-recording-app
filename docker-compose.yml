@@ -1,0 +1,17 @@
+services:
+  client:
+    container_name: cruise-drop-recording-app
+    image: react
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - container_data:/app/node_modules
+    ports:
+      - '3001:3001'
+
+volumes:
+  container_data:
+    driver: local
+    name: cruise-drop-recording-app-data
