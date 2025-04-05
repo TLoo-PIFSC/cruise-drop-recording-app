@@ -68,9 +68,9 @@ export default function CruiseNewPage() {
           </Grid>
           <Grid>
             <Button type="button" className='bg-green' onClick={(e) => recordLocationAndTime(e, 'retreive')}>Record Retreive Location & Time</Button>
-            <LableAndTextInput title="Retreive Time" record={gearRecords.retrieveTime} />
-            <LableAndTextInput title="Retreive Latitude" record={gearRecords.retrieveLatitude} />
-            <LableAndTextInput title="Retreive Longitude" record={gearRecords.retrieveLongitude} />
+            <LableAndTextInput title="Retreive Time" record={gearRecords.retreiveTime} />
+            <LableAndTextInput title="Retreive Latitude" record={gearRecords.retreiveLatitude} />
+            <LableAndTextInput title="Retreive Longitude" record={gearRecords.retreiveLongitude} />
           </Grid>
         </Grid>
         <ButtonGroup className="flex-justify-end">
