@@ -35,3 +35,8 @@ body {
 .header-logo {
   width: 72px;
 }
+
+.flex-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}

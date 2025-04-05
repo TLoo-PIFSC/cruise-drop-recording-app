@@ -10,7 +10,8 @@ import {
   Header,
 } from "@trussworks/react-uswds";
 
-import HomePage from "./pages/Home";
+import CruiseListPage from "./pages/CruiseList";
+import CruiseNewPage from "./pages/CruiseNew";
 
 function App({ application }) {
   const [isExpanded, setExpanded] = useState(false);
@@ -19,16 +20,22 @@ function App({ application }) {
       <a className="usa-skipnav" href="#main-content">
         Skip to main content
       </a>
-      <main id="main-content">
+      <main id="main-content" className="bg-primary-darker text-white">
         <BrowserRouter>
           <Header
             basic
             showMobileOverlay={isExpanded}
-            className="header-container"
+            className="header-container bg-base-lightest"
           >
             <div className="usa-nav-container">
               <div className="usa-navbar">
-                <Title className="header-title">RADFish Application</Title>
+                <Title>
+                  <img
+                    src="/logo.png"
+                    alt="RADFish Cruise App logo"
+                    className="header-logo"
+                  />
+                </Title>
                 <NavMenuButton
                   onClick={() => setExpanded((prvExpanded) => !prvExpanded)}
                   label="Menu"
@@ -38,7 +45,7 @@ function App({ application }) {
                 items={[
                   <Link
                     to="/"
-                    style={{ color: `${isExpanded ? "black" : "white"}` }}
+                    style={{ color: `${isExpanded ? "black" : "blue"}` }}
                   >
                     Home
                   </Link>,
@@ -52,7 +59,8 @@ function App({ application }) {
           </Header>
           <GridContainer>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/*" element={<CruiseListPage />} />
+              <Route path="/cruises/new" element={<CruiseNewPage />} />
             </Routes>
           </GridContainer>
         </BrowserRouter>
