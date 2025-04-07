@@ -40,3 +40,13 @@ body {
   display: flex;
   justify-content: space-evenly;
 }
+
+.go-back-button {
+  color: var(--noaa-lightest-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}

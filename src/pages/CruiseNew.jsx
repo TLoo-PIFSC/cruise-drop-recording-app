@@ -1,6 +1,7 @@
 import "../index.css";
 import React, { useState } from "react";
 import { Form, Button, Grid, GridContainer, ButtonGroup } from "@trussworks/react-uswds";
+import GoBackButton from "../components/GoBackButton";
 import LableAndTextInput from "../components/LableAndTextInput";
 
 export default function CruiseNewPage() {
@@ -56,6 +57,7 @@ export default function CruiseNewPage() {
 
   return (
     <GridContainer>
+      <GoBackButton to={'/cruises'} label={'Cruise List'} />
       <h1>Record Gear Information</h1>
       {error && <div>{error}</div>}
       <Form className="maxw-full">
