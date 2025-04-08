@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Form, Button, Grid, GridContainer, ButtonGroup } from "@trussworks/react-uswds";
 import GoBackButton from "../components/GoBackButton";
 import LableAndTextInput from "../components/LableAndTextInput";
+import { saveToDatabase } from "../utils/index_db";
 
 export default function CruiseNewPage() {
   // states
@@ -55,6 +56,21 @@ export default function CruiseNewPage() {
     }
   }
 
+  async function submitRecord(event) {
+    event.preventDefault();
+    try {
+      await saveToDatabase(gearRecords);
+      setGearRecords({ dropLatitude: "", dropLongitude: "", dropTime: "", retreiveLatitude: "", retreiveLongitude: "", retreiveTime: "" });
+    } catch (error) {
+      setError(error); // Set the error message
+
+      // Hide the error message after 5 seconds
+      setTimeout(() => {
+        setError('');
+      }, 5000); // 5000ms = 5 seconds
+    }
+  }
+
   return (
     <GridContainer>
       <GoBackButton to={'/cruises'} label={'Cruise List'} />
@@ -76,10 +92,10 @@ export default function CruiseNewPage() {
           </Grid>
         </Grid>
         <ButtonGroup className="flex-justify-end">
-          <Button type="reset" onClick={recordLocation} secondary>Reset</Button>
-          <Button type="submit" onClick={recordLocation}>Add Row</Button>
+          <Button type="reset" onClick={undefined} secondary>Reset</Button>
+          <Button type="submit" onClick={submitRecord}>Add Row</Button>
         </ButtonGroup>
       </Form>
     </GridContainer>
-  );
+  )
 };

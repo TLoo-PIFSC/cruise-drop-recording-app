@@ -1,8 +1,9 @@
 import "../index.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, GridContainer, Tag } from "@trussworks/react-uswds";
 import { Table } from "@nmfs-radfish/react-radfish";
+import { getList } from "../utils/index_db";
 
 export default function CruiseListPage() {
   const navigate = useNavigate();
@@ -15,44 +16,47 @@ export default function CruiseListPage() {
     navigate(`/cruises/${id}`);
   };
 
+  const [cruises, setCruises] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setCruises(await getList());
+      } catch (error) {
+        console.error("Error fetching cruise list:", error);
+      }
+    })();
+  }, []);
+
   const columns = [
     {
-      key: "cruiseName",
-      label: "Name",
+      key: "cruise_number",
+      label: "Cruise Number",
       sortable: true,
     },
     {
-      key: "departurePort",
-      label: "Departure Port",
-      render: (row) => {
-        return listValueLookup(ports, row.departurePortId);
-      },
+      key: "dropTime",
+      label: "Drop Time",
     },
     {
-      key: "returnPort",
-      label: "Return Port",
-      render: (row) => {
-        return listValueLookup(ports, row.returnPortId);
-      },
+      key: "dropLatitude",
+      label: "Drop Latitude",
     },
     {
-      key: "cruiseStatus",
-      label: "Status",
-      render: (row) => {
-        const cruiseStatus = listValueLookup(
-          cruiseStatuses,
-          row.cruiseStatusId,
-        );
-        return (
-          <Tag className={`usa-tag--big ${setStatusColor(row.cruiseStatusId)}`}>
-            {cruiseStatus}
-          </Tag>
-        );
-      },
+      key: "dropLongitude",
+      label: "Drop Longitude",
     },
     {
-      key: "startDate",
-      label: "Start Date",
+      key: "retreiveTime",
+      label: "Retreive Time",
+    },
+    {
+      key: "retreiveLatitude",
+      label: "Retreive Latitude",
+    },
+    {
+      key: "retreiveLongitude",
+      label: "Retreive Longitude",
     },
   ];
 
@@ -70,7 +74,7 @@ export default function CruiseListPage() {
       <Grid row >
         <Table
           columns={columns}
-          data={[]}
+          data={cruises}
           onRowClick={handleRowClick}
           className="margin-top-5"
           bordered
