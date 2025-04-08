@@ -57,3 +57,18 @@ export async function getList() {
 
   return result;
 }
+
+export async function getFromDatabase(id) {
+  const db = await openDatabase();
+  const tx = db.transaction('dropEvents', 'readonly');
+  const store = tx.objectStore('dropEvents');
+
+  const request = store.get(id);
+
+  const result = await new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+
+  return result;
+}

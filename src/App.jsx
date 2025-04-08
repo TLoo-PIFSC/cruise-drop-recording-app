@@ -59,8 +59,9 @@ function App({ application }) {
           </Header>
           <GridContainer>
             <Routes>
-              <Route path="/*" element={<CruiseListPage />} />
               <Route path="/cruises/new" element={<CruiseNewPage />} />
+              <Route path="/cruises/:id" element={<CruiseNewPage />} />
+              <Route path="/*" element={<CruiseListPage />} />
             </Routes>
           </GridContainer>
         </BrowserRouter>

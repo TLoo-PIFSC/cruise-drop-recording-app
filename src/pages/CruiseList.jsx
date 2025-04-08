@@ -30,7 +30,7 @@ export default function CruiseListPage() {
 
   const columns = [
     {
-      key: "cruise_number",
+      key: "cruiseNumber",
       label: "Cruise Number",
       sortable: true,
     },

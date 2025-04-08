@@ -1,14 +1,39 @@
 import "../index.css";
-import React, { useState } from "react";
-import { Form, Button, Grid, GridContainer, ButtonGroup } from "@trussworks/react-uswds";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Form, Button, Grid, GridContainer, ButtonGroup, TextInput, Label } from "@trussworks/react-uswds";
 import GoBackButton from "../components/GoBackButton";
 import LableAndTextInput from "../components/LableAndTextInput";
-import { saveToDatabase } from "../utils/index_db";
+import { saveToDatabase, getFromDatabase } from "../utils/index_db";
 
 export default function CruiseNewPage() {
   // states
-  const [gearRecords, setGearRecords] = useState({ dropLatitude: "", dropLongitude: "", dropTime: "", retreiveLatitude: "", retreiveLongitude: "", retreiveTime: "" });
+  const [gearRecords, setGearRecords] = useState({
+    cruiseNumber: "",
+    dropLatitude: "", dropLongitude: "", dropTime: "",
+    retreiveLatitude: "", retreiveLongitude: "", retreiveTime: ""
+  });
   const [error, setError] = useState("");
+  // hooks
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        try {
+          const record = await getFromDatabase(Number(id));
+          setGearRecords(record);
+        } catch (error) {
+          setError(error.toString());
+          // Hide the error message after 5 seconds
+          setTimeout(() => {
+            setError('');
+          }, 5000); // 5000ms = 5 seconds
+        }
+      })();
+    }
+  }, [id]);
+
   // functions
   function recordLocation(event) {
     event.preventDefault();
@@ -60,7 +85,7 @@ export default function CruiseNewPage() {
     event.preventDefault();
     try {
       await saveToDatabase(gearRecords);
-      setGearRecords({ dropLatitude: "", dropLongitude: "", dropTime: "", retreiveLatitude: "", retreiveLongitude: "", retreiveTime: "" });
+      setGearRecords({ cruiseNumber: "", dropLatitude: "", dropLongitude: "", dropTime: "", retreiveLatitude: "", retreiveLongitude: "", retreiveTime: "" });
     } catch (error) {
       setError(error); // Set the error message
 
@@ -77,6 +102,16 @@ export default function CruiseNewPage() {
       <h1>Record Gear Information</h1>
       {error && <div>{error}</div>}
       <Form className="maxw-full">
+        <Label htmlFor='cruiseNumber' className='margin-bottom-0' requiredMarker>Cruise Number</Label>
+        <TextInput
+          id='cruiseNumber'
+          name='cruiseNumber'
+          type="text"
+          className='margin-top-0 margin-bottom-3'
+          value={gearRecords.cruiseNumber}
+          onChange={(e) => setGearRecords({ ...gearRecords, cruiseNumber: e.target.value })}
+          required
+        />
         <Grid className="flex-evenly" row>
           <Grid>
             <Button type="button" className='bg-green' onClick={(e) => recordLocationAndTime(e, 'drop')}>Record Drop Location & Time</Button>
