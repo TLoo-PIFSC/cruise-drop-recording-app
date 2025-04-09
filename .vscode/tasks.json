@@ -2,14 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "docker-compose",
+      "type": "process",
       "label": "docker compose up",
-      "dockerCompose": {
-        "up": {
-          "detached": true,
-          "build": false
-        },
-        "files": ["${workspaceFolder}/docker-compose.yml"]
+      "command": "docker",
+      "args": ["compose", "up", "-d"],
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     }
   ]

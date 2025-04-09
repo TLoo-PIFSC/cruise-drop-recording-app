@@ -1,19 +1,22 @@
-import "../index.css";
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Form, Button, Grid, GridContainer, ButtonGroup, TextInput, Label } from "@trussworks/react-uswds";
-import GoBackButton from "../components/GoBackButton";
-import LableAndTextInput from "../components/LableAndTextInput";
-import { saveToDatabase, getFromDatabase } from "../utils/index_db";
+import '../index.css';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Form, Button, Grid, GridContainer, ButtonGroup, TextInput, Label } from '@trussworks/react-uswds';
+import GoBackButton from '../components/GoBackButton';
+import LableAndTextInput from '../components/LableAndTextInput';
+import { saveToDatabase, getFromDatabase } from '../utils/index_db';
 
 export default function CruiseNewPage() {
   // states
   const [gearRecords, setGearRecords] = useState({
-    cruiseNumber: "",
-    dropLatitude: "", dropLongitude: "", dropTime: "",
-    retreiveLatitude: "", retreiveLongitude: "", retreiveTime: ""
+    cruiseNumber: '',
+    dropLatitude: '',
+    dropLongitude: '',
+    dropTime: '',
+    retreiveLatitude: '',
+    retreiveLongitude: '',
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   // hooks
   const { id } = useParams();
 
@@ -38,7 +41,7 @@ export default function CruiseNewPage() {
   function recordLocation(event) {
     event.preventDefault();
     return new Promise((resolve, reject) => {
-      if ("geolocation" in navigator) {
+      if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const lat = position.coords.latitude;
@@ -46,11 +49,11 @@ export default function CruiseNewPage() {
             resolve([lat, lon]); // Resolving with lat and lon
           },
           (error) => {
-            reject("Error getting location: " + error.message); // Rejecting with error message
-          }
+            reject('Error getting location: ' + error.message); // Rejecting with error message
+          },
         );
       } else {
-        reject("Geolocation is not supported by this browser.");
+        reject('Geolocation is not supported by this browser.');
       }
     });
   }
@@ -85,7 +88,15 @@ export default function CruiseNewPage() {
     event.preventDefault();
     try {
       await saveToDatabase(gearRecords);
-      setGearRecords({ cruiseNumber: "", dropLatitude: "", dropLongitude: "", dropTime: "", retreiveLatitude: "", retreiveLongitude: "", retreiveTime: "" });
+      setGearRecords({
+        cruiseNumber: '',
+        dropLatitude: '',
+        dropLongitude: '',
+        dropTime: '',
+        retreiveLatitude: '',
+        retreiveLongitude: '',
+        retreiveTime: '',
+      });
     } catch (error) {
       setError(error); // Set the error message
 
@@ -101,36 +112,46 @@ export default function CruiseNewPage() {
       <GoBackButton to={'/cruises'} label={'Cruise List'} />
       <h1>Record Gear Information</h1>
       {error && <div>{error}</div>}
-      <Form className="maxw-full">
-        <Label htmlFor='cruiseNumber' className='margin-bottom-0' requiredMarker>Cruise Number</Label>
+      <Form className='maxw-full'>
+        <Label htmlFor='cruiseNumber' className='margin-bottom-0' requiredMarker>
+          Cruise Number
+        </Label>
         <TextInput
           id='cruiseNumber'
           name='cruiseNumber'
-          type="text"
+          type='text'
           className='margin-top-0 margin-bottom-3'
           value={gearRecords.cruiseNumber}
           onChange={(e) => setGearRecords({ ...gearRecords, cruiseNumber: e.target.value })}
           required
         />
-        <Grid className="flex-evenly" row>
+        <Grid className='flex-evenly' row>
           <Grid>
-            <Button type="button" className='bg-green' onClick={(e) => recordLocationAndTime(e, 'drop')}>Record Drop Location & Time</Button>
-            <LableAndTextInput title="Drop Time" record={gearRecords.dropTime} />
-            <LableAndTextInput title="Drop Latitude" record={gearRecords.dropLatitude} />
-            <LableAndTextInput title="Drop Longitude" record={gearRecords.dropLongitude} />
+            <Button type='button' className='bg-green' onClick={(e) => recordLocationAndTime(e, 'drop')}>
+              Record Drop Location & Time
+            </Button>
+            <LableAndTextInput title='Drop Time' record={gearRecords.dropTime} />
+            <LableAndTextInput title='Drop Latitude' record={gearRecords.dropLatitude} />
+            <LableAndTextInput title='Drop Longitude' record={gearRecords.dropLongitude} />
           </Grid>
           <Grid>
-            <Button type="button" className='bg-green' onClick={(e) => recordLocationAndTime(e, 'retreive')}>Record Retreive Location & Time</Button>
-            <LableAndTextInput title="Retreive Time" record={gearRecords.retreiveTime} />
-            <LableAndTextInput title="Retreive Latitude" record={gearRecords.retreiveLatitude} />
-            <LableAndTextInput title="Retreive Longitude" record={gearRecords.retreiveLongitude} />
+            <Button type='button' className='bg-green' onClick={(e) => recordLocationAndTime(e, 'retreive')}>
+              Record Retreive Location & Time
+            </Button>
+            <LableAndTextInput title='Retreive Time' record={gearRecords.retreiveTime} />
+            <LableAndTextInput title='Retreive Latitude' record={gearRecords.retreiveLatitude} />
+            <LableAndTextInput title='Retreive Longitude' record={gearRecords.retreiveLongitude} />
           </Grid>
         </Grid>
-        <ButtonGroup className="flex-justify-end">
-          <Button type="reset" onClick={undefined} secondary>Reset</Button>
-          <Button type="submit" onClick={submitRecord}>Add Row</Button>
+        <ButtonGroup className='flex-justify-end'>
+          <Button type='reset' onClick={undefined} secondary>
+            Reset
+          </Button>
+          <Button type='submit' onClick={submitRecord}>
+            Add Row
+          </Button>
         </ButtonGroup>
       </Form>
     </GridContainer>
-  )
-};
+  );
+}

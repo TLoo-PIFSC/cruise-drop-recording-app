@@ -1,5 +1,8 @@
 {
   "liveServer.settings.multiRootWorkspaceName": "frds-web-client",
   "liveServer.settings.root": "/dist/",
-  "liveServer.settings.file": "index.html"
+  "liveServer.settings.file": "index.html",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": ".prettierrc.cjs",
+  "prettier.prettierPath": "./node_modules/prettier"
 }
