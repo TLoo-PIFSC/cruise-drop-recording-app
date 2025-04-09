@@ -6,9 +6,9 @@ export function openDatabase() {
       const db = event.target.result;
 
       if (!db.objectStoreNames.contains('dropEvents')) {
-        db.createObjectStore('dropEvents', { keyPath: 'id' });
+        const store = db.createObjectStore('dropEvents', { keyPath: 'id', autoIncrement: true });
         store.createIndex('idIndex', 'id', { unique: true });
-        store.createIndex('cruiseNumberIndex', 'cruise_number', { unique: true });
+        store.createIndex('cruiseNumberIndex', 'cruiseNumber', { unique: true });
       }
     };
 
