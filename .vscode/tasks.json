@@ -5,7 +5,7 @@
       "type": "process",
       "label": "docker compose up",
       "command": "docker",
-      "args": ["compose", "up", "-d"],
+      "args": ["compose", "up","--build", "-d"],
       "options": {
         "cwd": "${workspaceFolder}"
       }

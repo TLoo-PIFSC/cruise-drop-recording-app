@@ -50,3 +50,9 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
+
+.cruise-number-input {
+  margin-bottom: 1.5rem;
+  margin-top: 0rem !important;
+  max-width: 22.836rem !important;
+}

@@ -120,7 +120,7 @@ export default function CruiseNewPage() {
           id='cruiseNumber'
           name='cruiseNumber'
           type='text'
-          className='margin-top-0 margin-bottom-3'
+          className='cruise-number-input'
           value={gearRecords.cruiseNumber}
           onChange={(e) => setGearRecords({ ...gearRecords, cruiseNumber: e.target.value })}
           required
