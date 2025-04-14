@@ -1,10 +1,10 @@
 import '../index.css';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Grid, GridContainer, ButtonGroup, TextInput, Label } from '@trussworks/react-uswds';
 import GoBackButton from '../components/GoBackButton';
 import LableAndTextInput from '../components/LableAndTextInput';
-import { saveToDatabase, getFromDatabase } from '../utils/index_db';
+import { db } from '../utils/index_db';
 
 export default function CruiseNewPage() {
   // states
@@ -18,16 +18,17 @@ export default function CruiseNewPage() {
   });
   const [error, setError] = useState('');
   // hooks
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       (async () => {
         try {
-          const record = await getFromDatabase(Number(id));
+          const record = await db.dropEvents.where('id').equals(Number(id)).first();
           setGearRecords(record);
         } catch (error) {
-          setError(error.toString());
+          setError(error.message);
           // Hide the error message after 5 seconds
           setTimeout(() => {
             setError('');
@@ -75,7 +76,7 @@ export default function CruiseNewPage() {
         [`${drop_retreive}Time`]: time,
       });
     } catch (error) {
-      setError(error); // Set the error message
+      setError(error.message); // Set the error message
 
       // Hide the error message after 5 seconds
       setTimeout(() => {
@@ -87,7 +88,10 @@ export default function CruiseNewPage() {
   async function submitRecord(event) {
     event.preventDefault();
     try {
-      await saveToDatabase(gearRecords);
+      if (!gearRecords.cruiseNumber) {
+        throw new Error('Cruise Number is required');
+      }
+      await db.dropEvents.put(gearRecords);
       setGearRecords({
         cruiseNumber: '',
         dropLatitude: '',
@@ -97,8 +101,9 @@ export default function CruiseNewPage() {
         retreiveLongitude: '',
         retreiveTime: '',
       });
+      navigate('/cruises');
     } catch (error) {
-      setError(error); // Set the error message
+      setError(error.message); // Set the error message
 
       // Hide the error message after 5 seconds
       setTimeout(() => {
@@ -111,7 +116,7 @@ export default function CruiseNewPage() {
     <GridContainer>
       <GoBackButton to={'/cruises'} label={'Cruise List'} />
       <h1>Record Gear Information</h1>
-      {error && <div>{error}</div>}
+      {error && <div className='text-red'>{error}</div>}
       <Form className='maxw-full'>
         <Label htmlFor='cruiseNumber' className='margin-bottom-0' requiredMarker>
           Cruise Number
