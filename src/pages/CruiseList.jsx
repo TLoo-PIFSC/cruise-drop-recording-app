@@ -1,7 +1,7 @@
 import '../index.css';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Grid, GridContainer, Tag } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Table } from '@nmfs-radfish/react-radfish';
 import { db } from '../utils/index_db';
 

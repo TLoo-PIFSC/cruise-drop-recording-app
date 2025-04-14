@@ -112,6 +112,24 @@ export default function CruiseNewPage() {
     }
   }
 
+  async function deleteRecord(event) {
+    event.preventDefault();
+    try {
+      if (!confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
+        return;
+      }
+      await db.dropEvents.where('id').equals(Number(id)).delete();
+      navigate('/cruises');
+    } catch (error) {
+      setError(error.message); // Set the error message
+
+      // Hide the error message after 5 seconds
+      setTimeout(() => {
+        setError('');
+      }, 5000); // 5000ms = 5 seconds
+    }
+  }
+
   return (
     <GridContainer>
       <GoBackButton to={'/cruises'} label={'Cruise List'} />
@@ -132,7 +150,12 @@ export default function CruiseNewPage() {
         />
         <Grid className='flex-evenly' row>
           <Grid>
-            <Button type='button' className='bg-green' onClick={(e) => recordLocationAndTime(e, 'drop')}>
+            <Button
+              type='button'
+              className='bg-green'
+              onClick={(e) => recordLocationAndTime(e, 'drop')}
+              disabled={gearRecords.dropTime}
+            >
               Record Drop Location & Time
             </Button>
             <LableAndTextInput title='Drop Time' record={gearRecords.dropTime} />
@@ -140,7 +163,12 @@ export default function CruiseNewPage() {
             <LableAndTextInput title='Drop Longitude' record={gearRecords.dropLongitude} />
           </Grid>
           <Grid>
-            <Button type='button' className='bg-green' onClick={(e) => recordLocationAndTime(e, 'retreive')}>
+            <Button
+              type='button'
+              className='bg-green'
+              onClick={(e) => recordLocationAndTime(e, 'retreive')}
+              disabled={gearRecords.retreiveTime}
+            >
               Record Retreive Location & Time
             </Button>
             <LableAndTextInput title='Retreive Time' record={gearRecords.retreiveTime} />
@@ -149,11 +177,11 @@ export default function CruiseNewPage() {
           </Grid>
         </Grid>
         <ButtonGroup className='flex-justify-end'>
-          <Button type='reset' onClick={undefined} secondary>
-            Reset
+          <Button type='reset' onClick={deleteRecord} secondary disabled={id ? false : true}>
+            Delete
           </Button>
           <Button type='submit' onClick={submitRecord}>
-            Add Row
+            {id ? 'Update Row' : 'Add Row'}
           </Button>
         </ButtonGroup>
       </Form>
