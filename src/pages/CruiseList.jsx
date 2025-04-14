@@ -16,6 +16,23 @@ export default function CruiseListPage() {
     navigate(`/cruises/${id}`);
   };
 
+  const downloadList = async (event) => {
+    event.preventDefault();
+    try {
+      const cruises = await db.dropEvents.toArray();
+      const csvContent = 'data:text/csv;charset=utf-8,' + cruises.map((e) => Object.values(e).join(',')).join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'cruise_list.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading cruise list:', error);
+    }
+  };
+
   const [cruises, setCruises] = useState([]);
 
   useEffect(() => {
@@ -73,6 +90,7 @@ export default function CruiseListPage() {
         <Table columns={columns} data={cruises} onRowClick={handleRowClick} className='margin-top-5' bordered striped />
         {/* {!cruises?.length && <p className="width-full text-color-white text-center">No Cruises Recorded!</p>} */}
       </Grid>
+      <Button onClick={downloadList}>Download List</Button>
     </GridContainer>
   );
 }
