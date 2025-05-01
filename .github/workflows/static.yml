@@ -22,38 +22,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    # Set up Node.js (using the version that your project requires)
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 'latest'  # You can adjust this to the Node.js version you need
-    
-    # Install dependencies
-    - name: Install dependencies
-      run: npm install  # Use yarn or other package managers if that's your choice
-    
-    # Build the Vite project
-    - name: Build Vite app
-      run: npm run build  # This will generate the 'dist' folder by default
-
-    # Upload build output as an artifact
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: github-pages
-        path: dist  # Upload the build output directory
-
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token for actions
-        artifact_name: github-pages  # Specify the artifact name to deploy
-
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: 'dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
