@@ -43,12 +43,17 @@ jobs:
     - name: Build Vite app
       run: npm run build  # This will generate the 'dist' folder by default
 
+    # Upload build output as an artifact
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: github-pages
+        path: dist  # Vite's default build output folder is 'dist'
+
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
       with:
-        branch: main          # Deploy to the 'main' branch
-        folder: dist          # Vite's default build output folder is 'dist'
         token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token for actions
 
