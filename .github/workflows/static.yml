@@ -43,16 +43,20 @@ jobs:
     - name: Build Vite app
       run: npm run build  # This will generate the 'dist' folder by default
 
-    # Upload build output as an artifact
+    # Compress build output to avoid issues with hard links or symlinks
+    - name: Compress build output
+      run: zip -r github-pages.zip dist
+
+    # Upload compressed build output as an artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: github-pages
-        path: dist  # Vite's default build output folder is 'dist'
+        path: github-pages.zip  # Upload the compressed file
 
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
-      id: deployment
+      artifact_name: github-pages.zip  # Specify the compressed artifact name to deploy
       uses: actions/deploy-pages@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token for actions
