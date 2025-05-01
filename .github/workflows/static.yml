@@ -56,4 +56,5 @@ jobs:
       uses: actions/deploy-pages@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token for actions
+        artifact_name: github-pages  # Specify the artifact name to deploy
 
