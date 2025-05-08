@@ -101,7 +101,7 @@ export default function CruiseNewPage() {
         retreiveLongitude: '',
         retreiveTime: '',
       });
-      navigate('/cruises');
+      navigate(`${import.meta.env.BASE_URL}cruises`);
     } catch (error) {
       setError(error.message); // Set the error message
 
@@ -119,7 +119,7 @@ export default function CruiseNewPage() {
         return;
       }
       await db.dropEvents.where('id').equals(Number(id)).delete();
-      navigate('/cruises');
+      navigate(`${import.meta.env.BASE_URL}cruises`);
     } catch (error) {
       setError(error.message); // Set the error message
 

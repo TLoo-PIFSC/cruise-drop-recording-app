@@ -9,11 +9,11 @@ export default function CruiseListPage() {
   const navigate = useNavigate();
 
   const handleNavNewCruise = () => {
-    navigate('/cruises/new');
+    navigate(`${import.meta.env.BASE_URL}cruises/new`);
   };
 
   const handleRowClick = ({ id }) => {
-    navigate(`/cruises/${id}`);
+    navigate(`${import.meta.env.BASE_URL}cruises/${id}`);
   };
 
   const downloadList = async (event) => {
