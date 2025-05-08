@@ -19,7 +19,7 @@ function App({ application }) {
             <div className='usa-nav-container'>
               <div className='usa-navbar'>
                 <Title>
-                  <img src='./logo.png' alt='RADFish Cruise App logo' className='header-logo' />
+                  <img src={`${import.meta.env.BASE_URL}/logo.png`} alt='RADFish Cruise App logo' className='header-logo' />
                 </Title>
                 <NavMenuButton onClick={() => setExpanded((prvExpanded) => !prvExpanded)} label='Menu' />
               </div>
