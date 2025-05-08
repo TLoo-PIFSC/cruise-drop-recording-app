@@ -18,8 +18,8 @@ export default defineConfig((env) => ({
       filename: "service-worker.js",
       includeAssets: ['noaafavicon.png', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        short_name: "Cruise-Drop-Recodring-App",
-        name: "Cruse-Drop-Recodring-App",
+        short_name: "Cruise-Drop-Recording-App",
+        name: "Cruse-Drop-Recording-App",
         icons: [
           {
             src: "icons/radfish-144.ico",
@@ -69,7 +69,7 @@ export default defineConfig((env) => ({
             purpose: "maskable",
           },
         ],
-        start_url: ".",
+        start_url: "/cruise-drop-recording-app/",
         display: "standalone",
         theme_color: "#000000",
         background_color: "#ffffff",
