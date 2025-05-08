@@ -13,7 +13,7 @@ COPY package.json .
 RUN npm install
 
 # Expose the port that the application listens on
-EXPOSE 3001
+EXPOSE 3001 4173
 
 # Start the application
 CMD ["npm", "start"]

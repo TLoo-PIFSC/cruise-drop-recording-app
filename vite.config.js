@@ -16,9 +16,10 @@ export default defineConfig((env) => ({
       strategies: "injectManifest",
       srcDir: "src",
       filename: "service-worker.js",
+      includeAssets: ['noaafavicon.png', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        short_name: "RADFish",
-        name: "RADFish React Boilerplate",
+        short_name: "Cruise-Drop-Recodring-App",
+        name: "Cruse-Drop-Recodring-App",
         icons: [
           {
             src: "icons/radfish-144.ico",
