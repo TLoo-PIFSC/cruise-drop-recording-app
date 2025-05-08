@@ -24,13 +24,13 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   steps:
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Build
       run: |
         echo "Building the project..."
         npm run build
       runs-on: ubuntu-latest
-    - name: Checkout
-      uses: actions/checkout@v4
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact
