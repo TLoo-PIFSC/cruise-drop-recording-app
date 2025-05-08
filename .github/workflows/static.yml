@@ -28,9 +28,6 @@ jobs:
       run: |
         echo "Building the project..."
         npm run build
-      environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
       runs-on: ubuntu-latest
     - name: Checkout
       uses: actions/checkout@v4
