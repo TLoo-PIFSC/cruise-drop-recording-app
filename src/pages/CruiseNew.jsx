@@ -101,7 +101,7 @@ export default function CruiseNewPage() {
         retreiveLongitude: '',
         retreiveTime: '',
       });
-      navigate(`${import.meta.env.BASE_URL}cruises`);
+      navigate(`${import.meta.env.BASE_URL}/cruises`);
     } catch (error) {
       setError(error.message); // Set the error message
 
@@ -119,7 +119,7 @@ export default function CruiseNewPage() {
         return;
       }
       await db.dropEvents.where('id').equals(Number(id)).delete();
-      navigate(`${import.meta.env.BASE_URL}cruises`);
+      navigate(`${import.meta.env.BASE_URL}/cruises`);
     } catch (error) {
       setError(error.message); // Set the error message
 
@@ -132,7 +132,7 @@ export default function CruiseNewPage() {
 
   return (
     <GridContainer>
-      <GoBackButton to={'/cruises'} label={'Cruise List'} />
+      <GoBackButton to={`${import.meta.env.BASE_URL}/cruises`} label={'Cruise List'} />
       <h1>Record Gear Information</h1>
       {error && <div className='text-red'>{error}</div>}
       <Form className='maxw-full'>

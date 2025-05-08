@@ -10,8 +10,8 @@ const app = new Application({
   serviceWorker: {
     url:
       import.meta.env.MODE === "development"
-        ? "/mockServiceWorker.js"
-        : "/service-worker.js",
+        ? "./mockServiceWorker.js"
+        : "./service-worker.js",
   },
   mocks: {
     handlers: import("../mocks/browser.js"),

@@ -36,9 +36,9 @@ function App({ application }) {
           </Header>
           <GridContainer>
             <Routes>
-              <Route path='/cruises/new' element={<CruiseNewPage />} />
-              <Route path='/cruises/:id' element={<CruiseNewPage />} />
-              <Route path='/*' element={<CruiseListPage />} />
+              <Route path={`${import.meta.env.BASE_URL}/cruises/new`} element={<CruiseNewPage />} />
+              <Route path={`${import.meta.env.BASE_URL}/cruises/:id`} element={<CruiseNewPage />} />
+              <Route path={`${import.meta.env.BASE_URL}/*`} element={<CruiseListPage />} />
             </Routes>
           </GridContainer>
         </BrowserRouter>
